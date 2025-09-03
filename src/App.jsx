@@ -242,7 +242,6 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section id="home" className="hero" ref={heroRef}>
         <div className="container">
           <div className="hero-content">
@@ -266,7 +265,6 @@ function App() {
         </div>
       </section>
 
-      {/* About Section */}
       <section id="about" className="about">
         <div className="container">
           <div className="section-header">
@@ -311,7 +309,6 @@ function App() {
         </div>
       </section>
 
-      {/* Experience Section */}
       <section id="experience" className="experience">
         <div className="container">
           <div className="section-header">
@@ -347,7 +344,6 @@ function App() {
         </div>
       </section>
 
-      {/* Projects Section */}
       <section id="projects" className="projects">
         <div className="container">
           <div className="section-header">
@@ -505,8 +501,7 @@ function App() {
                     }}>{tech.name}</span>
                   </div>
                 ))}
-                
-                {/* Duplicate set for seamless loop */}
+              
                 {techStack.map((tech, index) => (
                   <div key={`second-${index}`} className="tech-item" style={{
                     display: 'flex',
