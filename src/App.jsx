@@ -3,7 +3,10 @@ import './App.css'
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode')
+    return savedMode ? JSON.parse(savedMode) : false
+  })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   const heroRef = useRef(null)
@@ -22,16 +25,6 @@ function App() {
     },
     {
       id: 2,
-      title: "E-commerce Platform",
-      description: "Full-stack e-commerce platform with user authentication, shopping cart, payment integration, and inventory management.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe", "Express"],
-      demoLink: "#",
-      codeLink: "#",
-      category: "Full Stack",
-      status: "In Development"
-    },
-    {
-      id: 3,
       title: "Task Management Suite",
       description: "Enterprise-level productivity application with drag-and-drop functionality, progress tracking, and team collaboration.",
       technologies: ["React", "TypeScript", "GraphQL", "PostgreSQL"],
@@ -41,7 +34,7 @@ function App() {
       status: "Completed"
     },
     {
-      id: 4,
+      id: 3,
       title: "Vinyl Records E-commerce",
       description: "Full-featured e-commerce platform for vinyl records with product catalog, shopping cart, secure checkout, and inventory management. Features vinyl collection browsing, detailed product pages, and seamless purchasing experience.",
       technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe", "CSS"],
@@ -183,8 +176,19 @@ function App() {
     }
   }, [])
 
+  // Apply dark mode to document body
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode')
+    } else {
+      document.body.classList.remove('dark-mode')
+    }
+  }, [darkMode])
+
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
+    const newDarkMode = !darkMode
+    setDarkMode(newDarkMode)
+    localStorage.setItem('darkMode', JSON.stringify(newDarkMode))
   }
 
   const toggleMobileMenu = () => {
@@ -659,55 +663,15 @@ function App() {
                 placeholder="Tell me about your project or just say hello..."
                 rows="8"
                 className="message-textbox"
-                style={{
-                  width: '100%',
-                  minHeight: '200px',
-                  padding: '20px',
-                  fontSize: '16px',
-                  fontFamily: 'inherit',
-                  border: '2px solid #4A90E2',
-                  borderRadius: '12px',
-                  backgroundColor: 'white',
-                  color: 'black',
-                  resize: 'vertical',
-                  outline: 'none',
-                  transition: 'all 0.3s ease',
-                  marginBottom: '20px'
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = '#357ABD';
-                  e.target.style.backgroundColor = '#f8f9fa';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = '#4A90E2';
-                  e.target.style.backgroundColor = 'white';
-                }}
               ></textarea>
               <button 
                 type="button" 
                 className="send-button"
-                style={{
-                  padding: '12px 30px',
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  border: 'none',
-                  borderRadius: '8px',
-                  background: 'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  transform: 'translateY(0)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = 'none';
+                onClick={() => {
+                  alert('Thanks for your interest! This is a demo button.');
                 }}
               >
-                Send Message
+                Send Message ✉️
               </button>
             </div>
           </div>
