@@ -130,7 +130,6 @@ body {
   background-color: var(--bg-tertiary);
 }
 
-/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -358,7 +357,12 @@ section {
   padding: 100px 0;
 }
 
-/* About Section */
+
+.experience {
+  padding: 60px 0;
+}
+
+
 .about {
   background: var(--bg-secondary);
 }
@@ -414,56 +418,57 @@ section {
   flex: 1;
 }
 
-/* Experience Section */
 .timeline {
-  position: relative;
-  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .timeline::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--primary-color);
-  transform: translateX(-50%);
+  display: none;
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
 
-.timeline-item:nth-child(odd) .timeline-content {
-  margin-left: calc(50% + 2rem);
-}
-
+.timeline-item:nth-child(odd) .timeline-content,
 .timeline-item:nth-child(even) .timeline-content {
-  margin-right: calc(50% + 2rem);
-  text-align: right;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
 }
 
 .timeline-marker {
   position: absolute;
-  left: 50%;
   top: 1rem;
-  width: 16px;
-  height: 16px;
+  left: 1rem;
+  width: 12px;
+  height: 12px;
   background: var(--primary-color);
-  border: 4px solid var(--bg-primary);
+  border: 3px solid var(--bg-primary);
   border-radius: 50%;
-  transform: translateX(-50%);
+  transform: none;
   z-index: 1;
 }
 
 .timeline-content {
   background: var(--bg-primary);
   padding: 2rem;
-  border-radius: 12px;
+  padding-left: 3rem;
+  border-radius: 16px;
   box-shadow: var(--shadow-md);
+  height: 100%;
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--primary-color);
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
 }
 
 .timeline-header {
@@ -712,7 +717,6 @@ section {
   color: var(--primary-color);
 }
 
-/* Footer */
 .footer {
   background: var(--text-primary);
   color: white;
@@ -766,21 +770,10 @@ section {
   color: #9ca3af;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
-  .timeline::before {
-    left: 30px;
-  }
-
-  .timeline-item:nth-child(odd) .timeline-content,
-  .timeline-item:nth-child(even) .timeline-content {
-    margin-left: 70px;
-    margin-right: 0;
-    text-align: left;
-  }
-
-  .timeline-marker {
-    left: 30px;
+  .timeline {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
 }
 
@@ -873,24 +866,21 @@ section {
   }
 
   .timeline {
-    padding-left: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-left: 0;
   }
 
-  .timeline::before {
-    left: 15px;
+  .timeline-content {
+    padding: 1.5rem;
+    padding-left: 2.5rem;
   }
 
   .timeline-marker {
-    left: 15px;
-  }
-
-  .timeline-item:nth-child(odd) .timeline-content,
-  .timeline-item:nth-child(even) .timeline-content {
-    margin-left: 40px;
+    left: 0.75rem;
   }
 }
 
-/* Buttons */
 .btn {
   padding: 12px 24px;
   border: none;
@@ -966,12 +956,10 @@ section {
   opacity: 0.7;
 }
 
-/* Sections */
 section {
   padding: 100px 0;
 }
 
-/* Animation Classes */
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
@@ -983,7 +971,6 @@ section {
   transform: translateY(0);
 }
 
-/* About Section */
 .about {
   background: var(--bg-secondary);
 }
@@ -1057,7 +1044,6 @@ section {
   font-size: 0.9rem;
 }
 
-/* Projects Section */
 .project-filters {
   display: flex;
   justify-content: center;
@@ -1752,6 +1738,7 @@ section h2 {
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
+/* Override mobile nav to keep items in one row */
 @media (max-width: 768px) {
   .nav-menu {
     flex-direction: row !important;
@@ -1764,23 +1751,32 @@ section h2 {
   .nav-menu a {
     font-size: 0.9rem;
     padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+    border-radius: 20px;
   }
 }
 
-.dark-mode .nav-menu a {
-  background: var(--text-primary) !important;
+/* Ensure better dark mode support */
+.dark-mode .nav-menu {
+  background: var(--bg-primary) !important;
 }
 
-.dark-mode .naav-menu a:hover {
+.dark-mode .nav-menu a {
+  color: var(--text-primary) !important;
+}
+
+.dark-mode .nav-menu a:hover {
   background-color: var(--bg-tertiary) !important;
   color: var(--primary-color) !important;
 }
 
+/* Force dark mode styles */
 body.dark-mode {
-background-color: #111827 !important;
-color: #f9fafb !important;
+  background-color: #111827 !important;
+  color: #f9fafb !important;
 }
 
 .dark-mode * {
   transition: background-color 0.3s ease, color 0.3s ease !important;
 }
+
